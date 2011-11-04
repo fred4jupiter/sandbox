@@ -38,13 +38,7 @@
 			</props>
 		</property>
 	</bean>
-
-	<!-- **** security configuration **** -->
-	<bean id="customUserDetailsService" class="de.opitzconsulting.demo.service.CustomUserDetailsService">
-		<property name="userRepository" ref="userRepository" />
-		<property name="userRoleRepository" ref="userRoleRepository" />
-	</bean>
-
+	
 	<sec:authentication-manager>
 		<sec:authentication-provider user-service-ref="customUserDetailsService" />
 	</sec:authentication-manager>

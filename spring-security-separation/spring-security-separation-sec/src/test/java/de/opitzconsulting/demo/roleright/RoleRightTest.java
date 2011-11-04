@@ -1,31 +1,20 @@
 package de.opitzconsulting.demo.roleright;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import de.opitzconsulting.demo.domain.User;
 import de.opitzconsulting.demo.service.DemoService;
 
-import static org.junit.Assert.*;
-
-public class RoleRightTest extends AbstractIntegrationTests {
-
-    @Autowired
-    private AuthenticationManager authenticationManager;
+public class RoleRightTest extends AbstractSecurityIntegrationTests {
 
     @Autowired
     private DemoService demoService;
-
-    @Before
-    public void doBefore() {
-
-    }
 
     @After
     public void doAfter() {
@@ -63,9 +52,4 @@ public class RoleRightTest extends AbstractIntegrationTests {
         }
     }
 
-    private void login(String username, String password) {
-        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(username, password);
-        this.authenticationManager.authenticate(authentication);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-    }
 }

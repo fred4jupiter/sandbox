@@ -1,17 +1,17 @@
 package de.opitzconsulting.demo.roleright;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
-import de.opitzconsulting.demo.service.CustomUserDetailsService;
-
-import static org.junit.Assert.*;
-
-public class CustomUserDetailsServiceTest extends AbstractIntegrationTests {
+public class CustomUserDetailsServiceTest extends AbstractSecurityIntegrationTests {
 
     @Autowired
-    private CustomUserDetailsService customUserDetailsService;
+    private UserDetailsService customUserDetailsService;
 
     @Test
     public void checkInjection() {
