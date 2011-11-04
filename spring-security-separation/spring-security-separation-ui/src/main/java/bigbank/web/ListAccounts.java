@@ -19,7 +19,6 @@ public class ListAccounts implements Controller {
     }
 
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
-
         // Actual business logic
         ModelAndView mav = new ModelAndView("listAccounts");
         mav.addObject("accounts", bankService.findAccounts());

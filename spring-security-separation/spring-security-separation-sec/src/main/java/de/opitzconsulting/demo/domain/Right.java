@@ -15,7 +15,6 @@ import javax.persistence.Version;
  * @author staehler_m1
  */
 @Entity
-@Table(name = "SEC_RIGHT")
 public class Right {
 
     @Id
@@ -28,11 +27,7 @@ public class Right {
     @Version
     private Long version;
 
-    /**
-     * default constructor for hibernate
-     */
-    @SuppressWarnings("unused")
-    private Right() {
+    protected Right() {
 
     }
 

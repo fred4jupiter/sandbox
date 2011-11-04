@@ -27,6 +27,10 @@
 		<priority value="DEBUG" />
 	</category>
 
+    <category name="de.opitzconsulting.demo">
+		<priority value="DEBUG" />
+	</category>
+
 	<root>
 		<priority value="DEBUG" />
 		<appender-ref ref="ConsoleAppender" />

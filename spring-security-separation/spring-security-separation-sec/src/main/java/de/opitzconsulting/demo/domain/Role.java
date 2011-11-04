@@ -24,11 +24,8 @@ public class Role {
     @Version
     private Long version;
 
-    /**
-     * private constructor for hibernate
-     */
-    @SuppressWarnings("unused")
-    private Role() {
+
+    protected Role() {
 
     }
 

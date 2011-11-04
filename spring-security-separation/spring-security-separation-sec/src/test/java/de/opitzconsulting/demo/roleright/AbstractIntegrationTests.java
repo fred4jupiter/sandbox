@@ -8,7 +8,7 @@ import de.opitzconsulting.demo.domain.Role;
 import de.opitzconsulting.demo.domain.User;
 import de.opitzconsulting.demo.service.UserAdministration;
 
-@ContextConfiguration(locations = {"classpath:/META-INF/spring/ac-security-test.xml"})
+@ContextConfiguration(locations = {"classpath:/META-INF/spring/applicationContext-security-test.xml"})
 public abstract class AbstractIntegrationTests extends AbstractTransactionalJUnit4SpringContextTests{
 
     @Autowired

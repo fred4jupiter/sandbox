@@ -1,7 +1,10 @@
 package bigbank.service.impl;
 
+import java.util.Collection;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import bigbank.domain.Account;
@@ -9,6 +12,7 @@ import bigbank.repository.BankRepository;
 import bigbank.service.BankService;
 
 @Service("bankService")
+@Transactional
 public class BankServiceImpl implements BankService {
     private final BankRepository bankRepository;
 
@@ -18,7 +22,7 @@ public class BankServiceImpl implements BankService {
         this.bankRepository = bankRepository;
     }
 
-    public Account[] findAccounts() {
+    public Collection<Account> findAccounts() {
         return this.bankRepository.findAccounts();
     }
 
@@ -34,6 +38,20 @@ public class BankServiceImpl implements BankService {
         a.setBalance(a.getBalance() + amount);
         bankRepository.createOrUpdateAccount(a);
         return a;
+    }
+
+    @Override
+    public Account createAccountFor(String holder, double balance, double overdraft) {
+        Account account = createAccount(holder, balance, overdraft);
+        bankRepository.createOrUpdateAccount(account);
+        return account;
+    }
+
+    private Account createAccount(String holder, double balance, double overdraft) {
+        Account account = new Account(holder);
+        account.setBalance(balance);
+        account.setOverdraft(overdraft);
+        return account;
     }
 
     public Account readAccount(Long id) {

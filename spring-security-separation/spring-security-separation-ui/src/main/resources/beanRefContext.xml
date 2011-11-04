@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- This application context defines all application contexts to be imported in a bag. -->
+
+    <!-- used to get a scoped applicationContext -->
+    <bean id="separation-sec.context" class="org.springframework.context.support.ClassPathXmlApplicationContext">
+        <constructor-arg>
+            <list>
+                <value>classpath*:/META-INF/spring/applicationContext-security.xml</value>
+            </list>
+        </constructor-arg>
+    </bean>
+</beans>

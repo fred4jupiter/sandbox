@@ -4,12 +4,17 @@ import org.springframework.security.access.prepost.PreAuthorize;
 
 import bigbank.domain.Account;
 
+import java.util.Collection;
+import java.util.List;
+
 public interface BankService {
 
-    public Account readAccount(Long id);
+    Account readAccount(Long id);
 
-    public Account[] findAccounts();
+    Collection<Account> findAccounts();
 
     @PreAuthorize("hasRole('RIGHT_EXTREM_SECURE') and (#account.balance + #amount >= -#account.overdraft)")
-    public Account post(Account account, double amount);
+    Account post(Account account, double amount);
+
+    Account createAccountFor(String holder, double balance, double overdraft);
 }
