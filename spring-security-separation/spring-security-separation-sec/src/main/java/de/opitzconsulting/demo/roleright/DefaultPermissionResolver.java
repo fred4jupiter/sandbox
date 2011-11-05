@@ -25,10 +25,10 @@ import de.opitzconsulting.demo.domain.Right;
 @Component("permissionResolver")
 public class DefaultPermissionResolver implements PermissionResolver {
 
-    @PersistenceContext
+    @PersistenceContext(unitName = "spring-demo")
     private EntityManager entityManager;
 
-    @Transactional(readOnly = true)
+    @Transactional(value = "sec.transactionManager", readOnly = true)
     public Collection<GrantedAuthority> resolvePermissions(Collection<? extends GrantedAuthority> roleAuthorities) {
 
         // this hashMap contains all permissions

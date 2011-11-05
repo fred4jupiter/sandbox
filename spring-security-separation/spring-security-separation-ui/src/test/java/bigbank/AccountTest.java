@@ -1,18 +1,16 @@
 package bigbank;
 
+import static junit.framework.Assert.assertEquals;
+
 import java.util.Collection;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 
 import bigbank.domain.Account;
 import bigbank.repository.BankRepository;
-import static junit.framework.Assert.*;
 
-@ContextConfiguration(locations = { "classpath:applicationContext-business.xml", "classpath:beanRefContext.xml" })
-public class AccountTest extends AbstractTransactionalJUnit4SpringContextTests {
+public class AccountTest extends AbstractUiIntegrationTests {
 
     @Autowired
     private BankRepository bankRepository;

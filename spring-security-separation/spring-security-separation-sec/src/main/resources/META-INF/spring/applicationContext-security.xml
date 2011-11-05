@@ -14,17 +14,17 @@
 
 	<context:component-scan base-package="de.opitzconsulting.demo" />
 
-	<tx:annotation-driven transaction-manager="transactionManager" />
+	<tx:annotation-driven transaction-manager="sec.transactionManager" />
 
-	<jdbc:embedded-database id="dataSource" type="H2" />
+	<jdbc:embedded-database id="sec.dataSource" type="H2" />
 
-	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	<bean id="sec.transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="sec.entityManagerFactory" />
 	</bean>
 
-	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+	<bean id="sec.entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
 		<property name="persistenceUnitName" value="spring-demo" />
-		<property name="dataSource" ref="dataSource" />
+		<property name="dataSource" ref="sec.dataSource" />
 		<property name="jpaVendorAdapter">
 			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
 				<property name="showSql" value="true" />

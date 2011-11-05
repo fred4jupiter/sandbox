@@ -1,9 +1,8 @@
 package bigbank.repository;
 
-import bigbank.domain.Account;
-
 import java.util.Collection;
-import java.util.List;
+
+import bigbank.domain.Account;
 
 public interface BankRepository {
     Account readAccount(Long id);

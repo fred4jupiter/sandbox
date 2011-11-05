@@ -1,4 +1,4 @@
-package de.opitzconsulting.demo.service;
+package de.opitzconsulting.demo.service.impl;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -20,7 +20,7 @@ import de.opitzconsulting.demo.repository.UserRepository;
 import de.opitzconsulting.demo.repository.UserRoleRepository;
 
 @Service("customUserDetailsService")
-@Transactional
+@Transactional(value = "sec.transactionManager")
 public class CustomUserDetailsService implements UserDetailsService {
 
     @Autowired

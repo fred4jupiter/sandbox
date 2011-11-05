@@ -1,5 +1,6 @@
 package bigbank.repository.impl;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import bigbank.domain.Account;
 import bigbank.repository.BankRepository;
 
-@Repository("bankRepository")
+//@Repository("bankRepository")
 public class BankRepositoryStub implements BankRepository {
     private long id = 0;
     private final Map<Long, Account> accounts = new HashMap<Long, Account>();
@@ -22,9 +23,9 @@ public class BankRepositoryStub implements BankRepository {
         System.out.println("SAVE: " + account);
     }
 
-    public Account[] findAccounts() {
-        Account[] accounts = this.accounts.values().toArray(new Account[] {});
-        System.out.println("Returning " + accounts.length + " account(s):");
+    public Collection<Account> findAccounts() {
+        Collection<Account> accounts = this.accounts.values();
+        System.out.println("Returning " + accounts.size() + " account(s):");
         for (Account account : accounts) {
             System.out.println(" > " + account);
         }

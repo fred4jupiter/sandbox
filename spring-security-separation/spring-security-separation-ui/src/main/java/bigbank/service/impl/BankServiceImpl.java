@@ -12,7 +12,7 @@ import bigbank.repository.BankRepository;
 import bigbank.service.BankService;
 
 @Service("bankService")
-@Transactional
+@Transactional(value = "ui.transactionManager")
 public class BankServiceImpl implements BankService {
     private final BankRepository bankRepository;
 

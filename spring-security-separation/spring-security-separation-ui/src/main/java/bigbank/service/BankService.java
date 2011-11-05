@@ -1,11 +1,10 @@
 package bigbank.service;
 
+import java.util.Collection;
+
 import org.springframework.security.access.prepost.PreAuthorize;
 
 import bigbank.domain.Account;
-
-import java.util.Collection;
-import java.util.List;
 
 public interface BankService {
 

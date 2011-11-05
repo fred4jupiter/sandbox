@@ -1,4 +1,4 @@
-package de.opitzconsulting.demo.service;
+package de.opitzconsulting.demo.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,8 +14,10 @@ import de.opitzconsulting.demo.repository.RoleRepository;
 import de.opitzconsulting.demo.repository.RoleRightRepository;
 import de.opitzconsulting.demo.repository.UserRepository;
 import de.opitzconsulting.demo.repository.UserRoleRepository;
+import de.opitzconsulting.demo.service.UserAdministration;
 
 @Service
+@Transactional(value = "sec.transactionManager")
 public class DefaultUserAdministration implements UserAdministration {
 
     @Autowired
@@ -34,7 +36,6 @@ public class DefaultUserAdministration implements UserAdministration {
     private RightRepository rightRepository;
 
     @Override
-    @Transactional
     public Role createRoleWithRights(String roleStr, String... rights) {
         Role role = new Role(roleStr);
         roleRepository.save(role);
@@ -48,15 +49,14 @@ public class DefaultUserAdministration implements UserAdministration {
     }
 
     @Override
-    @Transactional
     public User createUserWithRoles(String username, String password, Role... roles) {
         User user = new User(username, password);
         userRepository.save(user);
-        
-        for (Role role : roles) {            
+
+        for (Role role : roles) {
             userRoleRepository.save(new UserRole(user, role));
         }
-        
+
         return user;
     }
 
