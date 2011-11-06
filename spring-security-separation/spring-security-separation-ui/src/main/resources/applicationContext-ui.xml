@@ -12,25 +12,9 @@
 
 	<context:component-scan base-package="bigbank" />
 
-	<bean id="ui.entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-		<property name="persistenceUnitName" value="spring-demo-ui" />
-		<property name="dataSource" ref="ui.dataSource" />
-		<property name="persistenceXmlLocation" value="#{uiProperties['persistenceXmlLocation']}" />
-		<property name="jpaVendorAdapter">
-			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
-				<property name="showSql" value="true" />
-				<property name="generateDdl" value="true" />
-				<property name="databasePlatform" value="org.hibernate.dialect.H2Dialect" />
-			</bean>
-		</property>
-		<property name="jpaProperties">
-			<props>
-				<prop key="hibernate.hbm2ddl.auto">create-drop</prop>
-			</props>
-		</property>
-	</bean>
+	<tx:annotation-driven transaction-manager="ui.transactionManager" />
 
-	<security:http use-expressions="true">
+	<security:http auto-config="true" use-expressions="true">
 		<security:intercept-url pattern="/secure/extreme/**" access="hasRole('RIGHT_EXTREM_SECURE')" />
 		<security:intercept-url pattern="/secure/**" access="isAuthenticated()" />
 		<security:intercept-url pattern="/**" access="permitAll" />
@@ -45,21 +29,69 @@
 	<beans profile="glassfish">
 		<util:properties id="uiProperties" location="classpath:/ui_glassfish.properties" />
 
+		<bean id="ui.entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+			<property name="persistenceUnitName" value="spring-demo-ui" />
+			<property name="dataSource" ref="ui.dataSource" />
+			<property name="persistenceXmlLocation" value="#{uiProperties['persistenceXmlLocation']}" />
+			<property name="jpaVendorAdapter">
+				<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+					<property name="showSql" value="true" />
+					<property name="generateDdl" value="true" />
+					<property name="databasePlatform" value="org.hibernate.dialect.H2Dialect" />
+				</bean>
+			</property>
+			<property name="jpaProperties">
+				<props>
+					<prop key="hibernate.hbm2ddl.auto">create-drop</prop>
+					<prop key="hibernate.transaction.factory_class">org.hibernate.transaction.JTATransactionFactory</prop>
+					<prop key="hibernate.transaction.manager_lookup_class">org.hibernate.transaction.SunONETransactionManagerLookup</prop>
+				</props>
+			</property>
+			<property name="loadTimeWeaver">
+				<bean class="org.springframework.instrument.classloading.glassfish.GlassFishLoadTimeWeaver" />
+			</property>
+		</bean>
+
 		<bean id="ui.transactionManager" class="org.springframework.transaction.jta.JtaTransactionManager">
 			<property name="transactionManagerName" value="java:appserver/TransactionManager" />
-		</bean>		
+		</bean>
 
-		<jee:jndi-lookup id="ui.dataSource" jndi-name="jdbc/database" />
+		<bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor">
+			<property name="persistenceUnits">
+				<map>
+					<entry key="spring-demo" value="persistence/spring-demo" />
+					<entry key="spring-demo-ui" value="persistence/spring-demo-ui" />
+				</map>
+			</property>
+		</bean>
+
+		<jee:jndi-lookup id="ui.dataSource" jndi-name="jdbc/uiDS" />
 	</beans>
 
 	<beans profile="ide">
 		<util:properties id="uiProperties" location="classpath:/ui_ide.properties" />
 
+		<bean id="ui.entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+			<property name="persistenceUnitName" value="spring-demo-ui" />
+			<property name="dataSource" ref="ui.dataSource" />
+			<property name="persistenceXmlLocation" value="#{uiProperties['persistenceXmlLocation']}" />
+			<property name="jpaVendorAdapter">
+				<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+					<property name="showSql" value="true" />
+					<property name="generateDdl" value="true" />
+					<property name="databasePlatform" value="org.hibernate.dialect.H2Dialect" />
+				</bean>
+			</property>
+			<property name="jpaProperties">
+				<props>
+					<prop key="hibernate.hbm2ddl.auto">create-drop</prop>
+				</props>
+			</property>
+		</bean>
+
 		<bean id="ui.transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
 			<property name="entityManagerFactory" ref="ui.entityManagerFactory" />
 		</bean>
-
-		<tx:annotation-driven transaction-manager="ui.transactionManager" />
 
 		<jdbc:embedded-database id="ui.dataSource" type="H2" />
 	</beans>

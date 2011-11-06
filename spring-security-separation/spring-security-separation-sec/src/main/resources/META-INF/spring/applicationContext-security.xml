@@ -12,23 +12,7 @@
 
 	<context:component-scan base-package="de.opitzconsulting.demo" />
 
-	<bean id="sec.entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-		<property name="persistenceUnitName" value="spring-demo" />
-		<property name="dataSource" ref="sec.dataSource" />
-		<property name="persistenceXmlLocation" value="#{secProperties['persistenceXmlLocation']}" />
-		<property name="jpaVendorAdapter">
-			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
-				<property name="showSql" value="true" />
-				<property name="generateDdl" value="true" />
-				<property name="databasePlatform" value="org.hibernate.dialect.H2Dialect" />
-			</bean>
-		</property>
-		<property name="jpaProperties">
-			<props>
-				<prop key="hibernate.hbm2ddl.auto">create-drop</prop>
-			</props>
-		</property>
-	</bean>
+	<tx:annotation-driven transaction-manager="sec.transactionManager" />
 
 	<sec:authentication-manager>
 		<sec:authentication-provider user-service-ref="customUserDetailsService" />
@@ -39,22 +23,61 @@
 	<beans profile="glassfish">
 		<util:properties id="secProperties" location="classpath:/sec_glassfish.properties" />
 
+		<bean id="sec.entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+			<property name="persistenceUnitName" value="spring-demo" />
+			<property name="dataSource" ref="sec.dataSource" />
+			<property name="persistenceXmlLocation" value="#{secProperties['persistenceXmlLocation']}" />
+			<property name="jpaVendorAdapter">
+				<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+					<property name="showSql" value="true" />
+					<property name="generateDdl" value="true" />
+					<property name="databasePlatform" value="org.hibernate.dialect.H2Dialect" />
+				</bean>
+			</property>
+			<property name="jpaProperties">
+				<props>
+					<prop key="hibernate.hbm2ddl.auto">create-drop</prop>
+					<prop key="hibernate.transaction.factory_class">org.hibernate.transaction.JTATransactionFactory</prop>
+					<prop key="hibernate.transaction.manager_lookup_class">org.hibernate.transaction.SunONETransactionManagerLookup</prop>
+				</props>
+			</property>
+			<property name="loadTimeWeaver">
+				<bean class="org.springframework.instrument.classloading.glassfish.GlassFishLoadTimeWeaver" />
+			</property>
+		</bean>
+
 		<bean id="sec.transactionManager" class="org.springframework.transaction.jta.JtaTransactionManager">
 			<property name="transactionManagerName" value="java:appserver/TransactionManager" />
 		</bean>
 
-		<jee:jndi-lookup id="sec.dataSource" jndi-name="jdbc/database" />
+		<jee:jndi-lookup id="sec.dataSource" jndi-name="jdbc/secDS" />
 
 	</beans>
 
 	<beans profile="ide">
 		<util:properties id="secProperties" location="classpath:/sec_ide.properties" />
 
+		<bean id="sec.entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+			<property name="persistenceUnitName" value="spring-demo" />
+			<property name="dataSource" ref="sec.dataSource" />
+			<property name="persistenceXmlLocation" value="#{secProperties['persistenceXmlLocation']}" />
+			<property name="jpaVendorAdapter">
+				<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+					<property name="showSql" value="true" />
+					<property name="generateDdl" value="true" />
+					<property name="databasePlatform" value="org.hibernate.dialect.H2Dialect" />
+				</bean>
+			</property>
+			<property name="jpaProperties">
+				<props>
+					<prop key="hibernate.hbm2ddl.auto">create-drop</prop>
+				</props>
+			</property>
+		</bean>
+
 		<bean id="sec.transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
 			<property name="entityManagerFactory" ref="sec.entityManagerFactory" />
 		</bean>
-
-		<tx:annotation-driven transaction-manager="sec.transactionManager" />
 
 		<jdbc:embedded-database id="sec.dataSource" type="H2" />
 

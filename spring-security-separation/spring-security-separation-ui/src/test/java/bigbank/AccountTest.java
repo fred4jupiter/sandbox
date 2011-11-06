@@ -23,4 +23,9 @@ public class AccountTest extends AbstractUiIntegrationTests {
         assertEquals(2, accounts.size());
     }
 
+    @Test
+    public void createApplicationContext() {
+        // checks creating the application context
+    }
+
 }
