@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 import org.springframework.test.context.transaction.TransactionConfiguration;
@@ -17,6 +18,7 @@ import de.opitzconsulting.demo.service.UserAdministration;
 
 @ContextConfiguration(locations = { "classpath:/applicationContext-security-test.xml" })
 @TransactionConfiguration(transactionManager = "sec.transactionManager")
+@ActiveProfiles({ "ide" })
 public abstract class AbstractSecurityIntegrationTests extends AbstractTransactionalJUnit4SpringContextTests {
 
     @Autowired
@@ -36,7 +38,7 @@ public abstract class AbstractSecurityIntegrationTests extends AbstractTransacti
         this.authenticationManager.authenticate(authentication);
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }
-    
+
     @Override
     @Autowired
     @Qualifier("sec.dataSource")
