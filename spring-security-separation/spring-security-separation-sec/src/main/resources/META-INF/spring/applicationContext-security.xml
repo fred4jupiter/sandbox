@@ -39,7 +39,9 @@
 	<beans profile="glassfish">
 		<util:properties id="secProperties" location="classpath:/sec_glassfish.properties" />
 
-		<bean id="sec.transactionManager" class="org.springframework.transaction.jta.JtaTransactionManager" />
+		<bean id="sec.transactionManager" class="org.springframework.transaction.jta.JtaTransactionManager">
+			<property name="transactionManagerName" value="java:appserver/TransactionManager" />
+		</bean>
 
 		<jee:jndi-lookup id="sec.dataSource" jndi-name="jdbc/database" />
 
