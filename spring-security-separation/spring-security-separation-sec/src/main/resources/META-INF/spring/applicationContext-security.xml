@@ -36,14 +36,11 @@
 			</property>
 			<property name="jpaProperties">
 				<props>
-					<prop key="hibernate.hbm2ddl.auto">create-drop</prop>
+					<prop key="hibernate.hbm2ddl.auto">create-drop</prop>					
 					<prop key="hibernate.transaction.factory_class">org.hibernate.transaction.JTATransactionFactory</prop>
 					<prop key="hibernate.transaction.manager_lookup_class">org.hibernate.transaction.SunONETransactionManagerLookup</prop>
 				</props>
-			</property>
-			<property name="loadTimeWeaver">
-				<bean class="org.springframework.instrument.classloading.glassfish.GlassFishLoadTimeWeaver" />
-			</property>
+			</property>			
 		</bean>
 
 		<bean id="sec.transactionManager" class="org.springframework.transaction.jta.JtaTransactionManager">
