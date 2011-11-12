@@ -14,6 +14,39 @@
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.mortbay.jetty</groupId>
+				<artifactId>jetty-maven-plugin</artifactId>
+				<version>8.0.3.v20111011</version>
+			</plugin>
+			<plugin>
+				<groupId>org.glassfish.maven.plugin</groupId>
+				<artifactId>maven-glassfish-plugin</artifactId>
+				<version>2.1</version>
+				<configuration>
+					<glassfishDirectory>c:/SW/glassfish-3.1</glassfishDirectory>
+					<user>admin</user>
+					<adminPassword>adminadmin</adminPassword>
+					<echo>true</echo>
+					<debug>true</debug>
+					<terse>false</terse>
+					<domain>
+						<name>domain1</name>
+						<adminPort>4848</adminPort>
+					</domain>
+					<components>
+						<component>
+							<name>${project.artifactId}</name>
+							<artifact>${project.build.directory}/${project.build.finalName}.war</artifact>
+						</component>
+					</components>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
 	<dependencies>
 		<dependency>
 			<groupId>de.opitzconsulting.demo</groupId>
@@ -69,14 +102,5 @@
 		</dependency>
 	</dependencies>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.mortbay.jetty</groupId>
-				<artifactId>jetty-maven-plugin</artifactId>
-				<version>8.0.3.v20111011</version>
-			</plugin>
-		</plugins>
-	</build>
 
 </project>
