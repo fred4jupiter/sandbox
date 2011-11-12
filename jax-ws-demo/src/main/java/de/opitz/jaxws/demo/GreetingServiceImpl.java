@@ -8,7 +8,7 @@ import javax.jws.soap.SOAPBinding.Use;
 
 import org.springframework.stereotype.Service;
 
-// start jetty and your WS will be available at: http://localhost:8080/greeting?wsdl
+// start jetty and your WS will be available at: http://localhost:8080/ws/greeting?wsdl
 @Service("greetingService")
 @WebService(serviceName = "GreetingService")
 @SOAPBinding(style = Style.RPC, use = Use.LITERAL)
