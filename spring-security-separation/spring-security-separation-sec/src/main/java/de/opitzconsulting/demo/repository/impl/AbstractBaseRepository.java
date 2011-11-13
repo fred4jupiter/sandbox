@@ -5,7 +5,7 @@ import javax.persistence.PersistenceContext;
 
 public abstract class AbstractBaseRepository {
 
-    @PersistenceContext(unitName = "spring-demo")
+    @PersistenceContext(unitName = "sec.entityManagerFactory")
     private EntityManager entityManager;
     
     protected EntityManager getEntityManager() {

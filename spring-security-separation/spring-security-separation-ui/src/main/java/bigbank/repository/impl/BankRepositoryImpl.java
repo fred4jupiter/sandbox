@@ -16,7 +16,7 @@ public class BankRepositoryImpl implements BankRepository {
 
     private static final Log logger = LogFactory.getLog(BankRepositoryImpl.class);
 
-    @PersistenceContext(unitName = "spring-demo-ui")
+    @PersistenceContext(unitName = "ui.entityManagerFactory")
     private EntityManager entityManager;
 
     public void createOrUpdateAccount(Account account) {

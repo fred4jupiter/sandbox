@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:util="http://www.springframework.org/schema/util" xmlns:sec="http://www.springframework.org/schema/security"
-	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:sec="http://www.springframework.org/schema/security" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
 	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.1.xsd
 		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.1.xsd
 		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
@@ -13,44 +12,46 @@
 
 	<context:component-scan base-package="de.opitzconsulting.demo" />
 
-	<tx:annotation-driven transaction-manager="sec.transactionManager" />
-
 	<sec:authentication-manager>
 		<sec:authentication-provider user-service-ref="customUserDetailsService" />
 	</sec:authentication-manager>
 
 	<sec:global-method-security pre-post-annotations="enabled" />
 
-	<bean id="sec.entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-		<property name="persistenceUnitName" value="spring-demo" />
-		<property name="dataSource" ref="sec.dataSource" />
-		<property name="persistenceXmlLocation" value="#{secProperties['persistenceXmlLocation']}" />
-		<property name="jpaVendorAdapter">
-			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
-				<property name="showSql" value="true" />
-				<property name="generateDdl" value="true" />
-				<property name="databasePlatform" value="org.hibernate.dialect.H2Dialect" />
-			</bean>
-		</property>
-		<property name="jpaProperties">
-			<props>
-				<prop key="hibernate.hbm2ddl.auto">create-drop</prop>
-			</props>
-		</property>
-	</bean>
-
-	<bean id="sec.transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-		<property name="entityManagerFactory" ref="sec.entityManagerFactory" />
-	</bean>
-
-	<jdbc:embedded-database id="sec.dataSource" type="H2" />
-
 	<beans profile="glassfish">
 		<util:properties id="secProperties" location="classpath:/sec_glassfish.properties" />
+
+		<jee:jndi-lookup id="sec.entityManagerFactory" jndi-name="persistence/securityPU" />
 	</beans>
 
 	<beans profile="ide">
 		<util:properties id="secProperties" location="classpath:/sec_ide.properties" />
+
+		<bean id="sec.entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+			<property name="persistenceUnitName" value="securityPU" />
+			<property name="dataSource" ref="sec.dataSource" />
+			<property name="persistenceXmlLocation" value="#{secProperties['persistenceXmlLocation']}" />
+			<property name="jpaVendorAdapter">
+				<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+					<property name="showSql" value="true" />
+					<property name="generateDdl" value="true" />
+					<property name="databasePlatform" value="org.hibernate.dialect.H2Dialect" />
+				</bean>
+			</property>
+			<property name="jpaProperties">
+				<props>
+					<prop key="hibernate.hbm2ddl.auto">create-drop</prop>
+				</props>
+			</property>
+		</bean>
+
+		<tx:annotation-driven />
+
+		<bean id="sec.transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+			<property name="entityManagerFactory" ref="sec.entityManagerFactory" />
+		</bean>
+
+		<jdbc:embedded-database id="sec.dataSource" type="H2" />
 	</beans>
 
 </beans>

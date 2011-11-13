@@ -10,7 +10,7 @@ import org.springframework.test.context.junit4.AbstractTransactionalJUnit4Spring
 import org.springframework.test.context.transaction.TransactionConfiguration;
 
 @ContextConfiguration(locations = { "classpath:/applicationContext-ui-test.xml" })
-@TransactionConfiguration(transactionManager = "ui.transactionManager")
+@TransactionConfiguration(transactionManager = "transactionManager")
 @ActiveProfiles({ "ide" })
 public abstract class AbstractUiIntegrationTests extends AbstractTransactionalJUnit4SpringContextTests {
 

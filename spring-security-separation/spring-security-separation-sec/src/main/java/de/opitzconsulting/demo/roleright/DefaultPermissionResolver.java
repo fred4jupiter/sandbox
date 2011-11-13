@@ -25,7 +25,7 @@ import de.opitzconsulting.demo.domain.Right;
 @Component("permissionResolver")
 public class DefaultPermissionResolver implements PermissionResolver {
 
-    @PersistenceContext(unitName = "spring-demo")
+    @PersistenceContext(unitName = "sec.entityManagerFactory")
     private EntityManager entityManager;
 
     @Transactional(value = "sec.transactionManager", readOnly = true)
