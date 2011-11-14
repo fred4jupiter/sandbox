@@ -26,6 +26,8 @@
 
 	<beans profile="glassfish">
 		<util:properties id="uiProperties" location="classpath:/ui_glassfish.properties" />
+		
+		<jee:jndi-lookup id="ui.entityManagerFactory" jndi-name="persistence/webPU" />
 
 		<tx:annotation-driven />
 		<tx:jta-transaction-manager />
@@ -55,6 +57,7 @@
 		<tx:annotation-driven />
 
 		<bean id="ui.transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+			<property name="dataSource" ref="ui.dataSource" />
 			<property name="entityManagerFactory" ref="ui.entityManagerFactory" />
 		</bean>
 
