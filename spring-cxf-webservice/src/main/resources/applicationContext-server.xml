@@ -10,6 +10,17 @@
 
 	<context:component-scan base-package="com.opitzconsulting.spring.cxf" />
 
-	<jaxws:endpoint id="helloWorld" implementor="#helloWorldEndpoint" address="/HelloWorld" />
+	<jaxws:endpoint id="helloWorld" implementor="#helloWorldEndpoint" address="/HelloWorld">
+		<jaxws:features>
+			<wsa:addressing xmlns:wsa="http://cxf.apache.org/ws/addressing" />
+		</jaxws:features>
+	</jaxws:endpoint>
+	
+	<jaxws:endpoint id="helloWorldCallback" implementor="#helloWorldEndpointCallback" address="/HelloWorldCallback">
+		<jaxws:features>
+			<wsa:addressing xmlns:wsa="http://cxf.apache.org/ws/addressing" />
+		</jaxws:features>
+	</jaxws:endpoint>		
+	
 
 </beans>
