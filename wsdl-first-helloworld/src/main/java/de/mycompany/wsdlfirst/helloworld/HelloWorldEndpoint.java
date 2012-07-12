@@ -12,7 +12,7 @@ import de.mycompany.wsdlfirst.helloworld.generated.HelloWorldService;
  *
  */
 @WebService(name = "HelloWorldService", targetNamespace = "http://wsdlfirst.mycompany.de/")
-public class HelloWorldServiceEndpoint implements HelloWorldService{
+public class HelloWorldEndpoint implements HelloWorldService{
 
     @WebMethod
     public String sayHelloTo(String name) {
