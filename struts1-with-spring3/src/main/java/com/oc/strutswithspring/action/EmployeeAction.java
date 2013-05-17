@@ -1,11 +1,8 @@
 package com.oc.strutswithspring.action;
 
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-
+import com.oc.strutswithspring.domain.Employee;
+import com.oc.strutswithspring.form.EmployeesForm;
+import com.oc.strutswithspring.service.EmployeeService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.struts.action.ActionForm;
@@ -15,49 +12,53 @@ import org.apache.struts.actions.DispatchAction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.oc.strutswithspring.domain.Employee;
-import com.oc.strutswithspring.form.EmployeesForm;
-import com.oc.strutswithspring.service.EmployeeService;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 @Component
 public class EmployeeAction extends DispatchAction {
-    
-    private Log logger = LogFactory.getLog(this.getClass());
-    
+
+    private static final Log LOG = LogFactory.getLog(EmployeeAction.class);
+
+    private static final String EMPLOYEES = "employees";
+
+    private static final String SUCCESS = "success";
+
     @Autowired
     private EmployeeService employeeService;
-    
+
     public EmployeeAction() {
-        logger.debug("creating new EmployeeAction: " + this);
+        LOG.debug("creating new EmployeeAction: " + this);
     }
 
     public ActionForward getEmployees(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws Exception {        
-        logger.debug("getEmployees");
+            throws Exception {
+        LOG.debug("getEmployees");
         populateEmployees(request);
-        return mapping.findForward(ForwardName.SUCCESS);
+        return mapping.findForward(SUCCESS);
     }
 
     public ActionForward setUpForUpdate(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        logger.debug("setUpForUpdate");
+        LOG.debug("setUpForUpdate");
         EmployeesForm empForm = (EmployeesForm) form;
         empForm.setEmployees(employeeService.getAllEmployees());
-        return mapping.findForward(ForwardName.SUCCESS);
+        return mapping.findForward(SUCCESS);
     }
 
     public ActionForward update(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        logger.debug("update");
+        LOG.debug("update");
         EmployeesForm empForm = (EmployeesForm) form;
         employeeService.updateEmployees(empForm.getEmployees());
         populateEmployees(request);
-        return mapping.findForward(ForwardName.SUCCESS);
+        return mapping.findForward(SUCCESS);
     }
 
     private void populateEmployees(HttpServletRequest request) {
         List<Employee> employees = employeeService.getAllEmployees();
-        request.setAttribute(ForwardName.EMPLOYEES, employees);
+        request.setAttribute(EMPLOYEES, employees);
     }
 
 }

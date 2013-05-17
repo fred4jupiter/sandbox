@@ -20,21 +20,20 @@ public class EmployeesForm extends ActionForm {
 
     private static final long serialVersionUID = -7676581345118986380L;
 
-    private Log logger = LogFactory.getLog(this.getClass());
+    private static final Log LOG = LogFactory.getLog(EmployeesForm.class);
 
     private List<Employee> employees;
-    
+
     public EmployeesForm() {
-        logger.debug("creating new EmployeesForm: " + this);
+        LOG.debug("creating new EmployeesForm: " + this);
     }
-    
+
+    public List<Employee> getEmployees() {
+        return employees;
+    }
 
     public void setEmployees(List<Employee> employees) {
         this.employees = employees;
-    }
-
-    public List<Employee> getEmployees() {        
-        return employees;
     }
 
     @SuppressWarnings("unchecked")
