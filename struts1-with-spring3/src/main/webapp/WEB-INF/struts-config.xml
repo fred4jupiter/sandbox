@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN"
-        "http://jakarta.apache.org/struts/dtds/struts-config_1_2.dtd">
+        "http://jakarta.apache.org/struts/dtds/struts-config_1_3.dtd">
 
 <struts-config>
 
@@ -24,7 +24,7 @@
 	<message-resources parameter="MessageResources" null="false" />
 
 	<plug-in className="org.springframework.web.struts.ContextLoaderPlugIn">
-		<set-property property="contextConfigLocation" value="/WEB-INF/classes/applicationContext.xml" />
+		<set-property property="contextConfigLocation" value="/WEB-INF/web-app-context.xml" />
 	</plug-in>
 
 </struts-config>

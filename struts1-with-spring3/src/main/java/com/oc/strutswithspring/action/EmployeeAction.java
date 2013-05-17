@@ -15,7 +15,6 @@ import org.apache.struts.actions.DispatchAction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.oc.strutswithspring.def.Constants;
 import com.oc.strutswithspring.domain.Employee;
 import com.oc.strutswithspring.form.EmployeesForm;
 import com.oc.strutswithspring.service.EmployeeService;
@@ -36,7 +35,7 @@ public class EmployeeAction extends DispatchAction {
             throws Exception {        
         logger.debug("getEmployees");
         populateEmployees(request);
-        return mapping.findForward(Constants.SUCCESS);
+        return mapping.findForward(ForwardName.SUCCESS);
     }
 
     public ActionForward setUpForUpdate(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
@@ -44,7 +43,7 @@ public class EmployeeAction extends DispatchAction {
         logger.debug("setUpForUpdate");
         EmployeesForm empForm = (EmployeesForm) form;
         empForm.setEmployees(employeeService.getAllEmployees());
-        return mapping.findForward(Constants.SUCCESS);
+        return mapping.findForward(ForwardName.SUCCESS);
     }
 
     public ActionForward update(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
@@ -53,12 +52,12 @@ public class EmployeeAction extends DispatchAction {
         EmployeesForm empForm = (EmployeesForm) form;
         employeeService.updateEmployees(empForm.getEmployees());
         populateEmployees(request);
-        return mapping.findForward(Constants.SUCCESS);
+        return mapping.findForward(ForwardName.SUCCESS);
     }
 
     private void populateEmployees(HttpServletRequest request) {
         List<Employee> employees = employeeService.getAllEmployees();
-        request.setAttribute(Constants.EMPLOYEES, employees);
+        request.setAttribute(ForwardName.EMPLOYEES, employees);
     }
 
 }
