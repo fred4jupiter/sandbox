@@ -16,7 +16,7 @@
 		<project.build.sourceEncoding>UTF8</project.build.sourceEncoding>
 		<slf4j.version>1.6.2</slf4j.version>
 		<struts.version>1.3.10</struts.version>
-		<spring.version>3.2.2.RELEASE</spring.version>
+		<spring.version>3.2.3.RELEASE</spring.version>
 	</properties>
 
 	<build>
@@ -32,19 +32,9 @@
 				</configuration>
 			</plugin>
 			<plugin>
-				<groupId>org.mortbay.jetty</groupId>
-				<artifactId>jetty-maven-plugin</artifactId>
-				<version>8.1.2.v20120308</version>
-				<configuration>
-					<reload>manual</reload>
-					<stopKey>killSwitch</stopKey>
-					<stopPort>9999</stopPort>
-					<connectors>
-						<connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
-							<port>8282</port>
-						</connector>
-					</connectors>
-				</configuration>
+                <groupId>org.mortbay.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <version>8.1.11.v20130520</version>
 			</plugin>
 		</plugins>
 	</build>
