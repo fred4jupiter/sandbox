@@ -1,1 +1,0 @@
-This example is inspired by: http://www.learntechnology.net/content/struts/struts_nested.jsp
